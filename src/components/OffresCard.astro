@@ -2,6 +2,7 @@
 import PbImage from '../components/pbImage.astro'; 
 
 const { offre } = Astro.props;
+
 ---
 
 <div
@@ -10,6 +11,8 @@ const { offre } = Astro.props;
     <PbImage 
         record={offre} 
         recordImage={offre.image[0]} 
+        width={900} 
+        height={300}
         class="w-full h-48 object-cover rounded mb-4" 
     />
 
