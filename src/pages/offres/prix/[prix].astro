@@ -9,7 +9,10 @@ const offres = await getOffresinfprix(prix);
 ---
 
 <Layout title="Offres">
-  <h1>Offres disponibles inférieures à {prix} €</h1>
+     <h1 class="text-4xl font-black bg-gradient-to-r from-orange-600 bg-clip-text text-transparent drop-shadow-2xl mb-8 text-center">
+      Offres disponibles inférieures à {prix} €
+    </h1>
+    
   
   <div>
     {offres.map((offre) => 

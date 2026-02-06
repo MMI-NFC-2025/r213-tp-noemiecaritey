@@ -9,7 +9,8 @@ const offres = await getOffresSupSurface(surface);
 ---
 
 <Layout title="Offres">
-  <h1>Offres disponibles supérieures à {surface} m²</h1>
+  <h1 class="text-4xl font-black bg-gradient-to-r from-orange-600 bg-clip-text text-transparent drop-shadow-2xl mb-8 text-center">
+    Offres disponibles supérieures à {surface} m²</h1>
   
   <div>
     {offres.map((offre) => 

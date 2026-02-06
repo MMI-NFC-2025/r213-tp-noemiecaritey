@@ -4,19 +4,22 @@ import OffreCard from "../../components/OffresCard.astro";
 import { getOffres, getOffresSupSurface, getOffresinfprix } from "../../backend.mjs";
 import Layout from "../../layouts/Layout.astro";
 
-
 const offres = await getOffres();
-const surfaces= await getOffresSupSurface(80);
-const prix= await getOffresinfprix(500000);
+const surfaces = await getOffresSupSurface(80);
+const prix = await getOffresinfprix(500000);
 ---
 
 <Layout title="Offres">
-  <h1>Offres disponibles</h1>
-  <a href="/offres/surface/80">Voir les offres supérieures à 80 m²</a>
-  <a href="/offres/prix/500000">Voir les offres inférieures à 500000 €</a>
-  <button id="favori-button" class="bg-slate-600 rounded-lg text-white p-2">Afficher les favoris</button>
+  <h1 class="text-2xl font-bold mb-6">Offres disponibles</h1>
   
-  <div>
+  <div class="flex gap-4 mb-6">
+    <a href="/offres/surface/80" class="text-blue-600 hover:underline font-medium">< 80 m²</a>
+    <a href="/offres/prix/500000" class="text-green-600 hover:underline font-medium"> >500k €</a>
+  </div>
+  
+  <button id="favori-button" class="bg-gray-800 text-white px-6 py-2 rounded hover:bg-gray-900 mb-6">Afficher les favoris</button>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {offres.map((offre) => 
       <div class="offre" data-favori={offre.favori.toString()}>
         <OffreCard offre={offre} />
@@ -24,7 +27,6 @@ const prix= await getOffresinfprix(500000);
     )}
   </div>
 </Layout>
-
 
 <script>
     //@ts-nocheck
