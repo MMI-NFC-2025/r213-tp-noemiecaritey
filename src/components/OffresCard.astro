@@ -18,5 +18,6 @@ const { offre } = Astro.props;
 
     <div class="flex items-center gap-2 mb-2">
         <strong class="text-lg">{offre.nom_maison}</strong>
+        <a href={`/offres/${offre.id}`}>Voir plus</a>
     </div>
 </div>
