@@ -1,0 +1,21 @@
+---
+import { getOffresSupSurface } from '../../../backend.mjs';
+import Layout  from '../../../layouts/Layout.astro';
+import OffreCard from '../../../components/OffresCard.astro';
+
+const { surface } = Astro.params;
+const offres = await getOffresSupSurface(surface);
+
+---
+
+<Layout title="Offres">
+  <h1>Offres disponibles supérieures à {surface} m²</h1>
+  
+  <div>
+    {offres.map((offre) => 
+      <div class="offre" data-surface={offre.surface.toString()}>
+        <OffreCard offre={offre} />
+      </div>
+    )}
+  </div>
+</Layout>
