@@ -1,18 +1,19 @@
 ---
 import "../../styles/global.css";
 import OffreCard from "../../components/OffresCard.astro";
-import { getOffres, getOffresSupSurface } from "../../backend.mjs";
+import { getOffres, getOffresSupSurface, getOffresinfprix } from "../../backend.mjs";
 import Layout from "../../layouts/Layout.astro";
 
 
 const offres = await getOffres();
 const surfaces= await getOffresSupSurface(80);
-
+const prix= await getOffresinfprix(500000);
 ---
 
 <Layout title="Offres">
   <h1>Offres disponibles</h1>
   <a href="/offres/surface/80">Voir les offres supérieures à 80 m²</a>
+  <a href="/offres/prix/500000">Voir les offres inférieures à 500000 €</a>
   <button id="favori-button" class="bg-slate-600 rounded-lg text-white p-2">Afficher les favoris</button>
   
   <div>

@@ -1,0 +1,21 @@
+---
+import { getOffresinfprix } from '../../../backend.mjs';
+import Layout  from '../../../layouts/Layout.astro';
+import OffreCard from '../../../components/OffresCard.astro';
+
+const { prix } = Astro.params;
+const offres = await getOffresinfprix(prix);
+
+---
+
+<Layout title="Offres">
+  <h1>Offres disponibles inférieures à {prix} €</h1>
+  
+  <div>
+    {offres.map((offre) => 
+      <div class="offre" data-prix={offre.prix.toString()}>
+        <OffreCard offre={offre} />
+      </div>
+    )}
+  </div>
+</Layout>

@@ -33,3 +33,8 @@ export async function getOffresSupSurface(surface){
     const records = await pb.collection('maison').getFullList({ filter: `surface >= ${surface}` }) ;
     return records
 }
+
+export async function getOffresinfprix(prix){
+    const records = await pb.collection('maison').getFullList({ filter: `prix <= ${prix}` }) ;
+    return records
+}
