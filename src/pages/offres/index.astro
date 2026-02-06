@@ -1,10 +1,10 @@
 ---
-import '../styles/global.css'
-import Layout from "../layouts/Layout.astro";
-import OffreCard from "../components/OffresCard.astro";
+import "../../styles/global.css";
+import OffreCard from "../../components/OffresCard.astro";
+import { getOffres } from "../../backend.mjs";
+import Layout from "../../layouts/Layout.astro";
 
 
-import { getOffres } from '../backend.mjs';
 const offres = await getOffres();
 
 ---
