@@ -3,16 +3,46 @@ import "../../styles/global.css";
 import OffreCard from "../../components/OffresCard.astro";
 import { getOffres, getOffresSupSurface, getOffresinfprix } from "../../backend.mjs";
 import Layout from "../../layouts/Layout.astro";
+import { filterByPrix } from "../../backend.mjs";
 
-const offres = await getOffres();
+//const offres = await getOffres();
 const surfaces = await getOffresSupSurface(80);
 const prix = await getOffresinfprix(500000);
+
+let offres;
+let message = '';
+if (Astro.request.method === "POST") {
+    const data = await Astro.request.formData();
+    const minPrix = parseInt(data.get("minPrix") as string);
+    const maxPrix = parseInt(data.get("maxPrix") as string);
+
+    if (minPrix > 0 && maxPrix > 0 && maxPrix > minPrix) {
+      console.log("ici par prix", minPrix, maxPrix);
+      
+        offres = await filterByPrix(minPrix, maxPrix);
+        if (offres.length === 0) {
+            message = `Pas d'offres entre ${minPrix}€ et ${maxPrix}€`;
+        } else {
+            message = `Liste des offres entre ${minPrix}€ et ${maxPrix}€`;
+        }
+    } else {
+        message = "Veuillez entrer des valeurs valides pour le prix.";
+    }
+} else {
+    offres = await getOffres();
+}
+
 ---
 
 <Layout title="Offres">
   <h1 class="text-2xl font-bold mb-6">Offres disponibles</h1>
 
   <a href="offres/add" class="text-blue-800 underline">Ajouter une offre</a>
+  <form action="/offres" method="POST">
+    <input type="number" name="minPrix" placeholder="Prix minimum" />
+    <input type="number" name="maxPrix" placeholder="Prix maximum" />
+    <input type="submit" value="Filtrer par prix" />
+</form>
   
   <div class="flex gap-4 mb-6">
     <a href="/offres/surface/80" class="text-blue-600 hover:underline font-medium">< 80 m²</a>
@@ -22,7 +52,7 @@ const prix = await getOffresinfprix(500000);
   <button id="favori-button" class="bg-gray-800 text-white px-6 py-2 rounded hover:bg-gray-900 mb-6">Afficher les favoris</button>
   
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {offres.map((offre) => 
+    {offres?.map((offre) => 
       <div class="offre" data-favori={offre.favori.toString()}>
         <OffreCard offre={offre} />
       </div>

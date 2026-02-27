@@ -71,3 +71,8 @@ export async function addEvent(data) {
         };
     }
 }
+
+export async function filterByPrix(minPrix, maxPrix) {
+    const records = await pb.collection('maison').getFullList({ filter: `prix >= ${minPrix} && prix <= ${maxPrix}` }) ;
+    return records
+}
