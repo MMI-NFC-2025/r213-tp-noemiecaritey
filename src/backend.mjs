@@ -38,3 +38,36 @@ export async function getOffresinfprix(prix){
     const records = await pb.collection('maison').getFullList({ filter: `prix <= ${prix}` }) ;
     return records
 }
+
+
+export async function addOffre(house) {
+    try {
+        await db.collection('maison').create(house);
+        return {
+            success: true,
+            message: 'Offre ajoutée avec succès'
+        };
+    } catch (error) {
+        console.log('Une erreur est survenue en ajoutant la maison', error);
+        return {
+            success: false,
+            message: 'Une erreur est survenue en ajoutant la maison'
+        };
+    }
+}
+
+
+export async function addEvent(data) {
+    try {
+        await pb.collection("maison").create(data);
+        return {
+            success: true,
+            message: "L'événement a été ajouté avec succès.",
+        };
+    } catch (error) {
+        return {
+            success: false,
+            message: "Une erreur est survenue lors de l'ajout de l'événement : " + error,
+        };
+    }
+}
