@@ -76,3 +76,33 @@ export async function filterByPrix(minPrix, maxPrix) {
     const records = await pb.collection('maison').getFullList({ filter: `prix >= ${minPrix} && prix <= ${maxPrix}` }) ;
     return records
 }
+
+export async function getAgentById(id) {
+    try {
+        const agent = await pb.collection('agent').getOne(id);
+        return agent;
+    } catch (error) {
+        console.log('Une erreur est survenue en récupérant l\'agent', error);
+        return null;
+    }
+}
+export async function getAllAgents() {
+    try {
+        const agent = await pb.collection('agent').getFullList();
+        return agent;
+    } catch (error) {
+        console.log('Une erreur est survenue en récupérant les agents', error);
+        return null;
+    }
+}
+
+export async function getOffresByAgent(id) {
+    const records = await pb.collection('maison').getFullList({ filter: `agent = "${id}"` }) ;
+    return records
+}
+
+export async function setFavori(offre) {
+    await db.collection('offres').update(offre.id, { 
+        favori: !offre.favori 
+    });
+}

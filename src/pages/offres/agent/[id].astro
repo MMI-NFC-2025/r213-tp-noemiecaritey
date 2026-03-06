@@ -1,0 +1,30 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import OffreCard from '../../components/OffresCard.astro';
+import { getOffresByAgent, getAgentById } from '../../backend.mjs';
+
+const { id } = Astro.params;
+
+const agent = await getAgentById(id);
+const offres = await getOffresByAgent(id);
+---
+
+<Layout title={`Offres de ${agent.nom}`}>
+  <h1 class="text-4xl font-black mb-8 text-center">
+    Offres de {agent.nom}
+  </h1>
+
+  {offres.length === 0 && (
+    <p class="text-center text-slate-500">
+      Aucune offre pour cet agent.
+    </p>
+  )}
+
+  <div>
+    {offres.map((offre) => (
+      <div class="offre" data-prix={offre.prix.toString()}>
+        <OffreCard offre={offre} />
+      </div>
+    ))}
+  </div>
+</Layout>

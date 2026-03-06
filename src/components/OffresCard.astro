@@ -1,6 +1,7 @@
 ---
 import PbImage from '../components/pbImage.astro'; 
 
+
 const { offre } = Astro.props;
 ---
 
@@ -18,11 +19,43 @@ const { offre } = Astro.props;
     <strong class="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors">
       {offre.nom_maison}
     </strong>
+
+    <button class="favoriteButton absolute bottom-0 left-0 p-2 text-white rounded-br-lg" data-offre={JSON.stringify(offre)}>
+    <img 
+        id="favorite-icon" 
+        src={offre.favori ? "favorite_filled.png" : "favorite.png"} 
+        alt="Favorite Icon" 
+        class="w-6 h-6 pointer-events-none"
+      />
+    </button>
+
     <a 
       href={`/offres/${offre.id}`}
       class="ml-auto bg-orange-600 text-white px-4 py-1.5 rounded-lg text-sm font-semibold hover:bg-orange-700 hover:shadow-md transition-all duration-200"
     >
-      Voir plus
+     Voir plus
     </a>
   </div>
 </div>
+
+<script>
+    //@ts-nocheck
+    import { setFavori } from "../backend.mjs";
+    const favoriteButtons = document.querySelectorAll(".favoriteButton");
+
+    favoriteButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const offreData = JSON.parse(button.dataset.offre || '{}');
+            const newFavori = !offreData.favori;
+
+            setFavori(offreData);
+
+            const favIcon = button.querySelector('#favorite-icon');
+            if (favIcon) {
+                favIcon.src = newFavori ? "/favorite_filled.png" : "/favorite.png";
+            }
+            offreData.favori = newFavori;
+            button.dataset.offre = JSON.stringify(offreData);
+        });
+    });
+</script>

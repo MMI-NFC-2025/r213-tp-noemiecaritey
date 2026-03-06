@@ -1,8 +1,46 @@
 ---
 import '../styles/global.css'
 import Layout from "../layouts/Layout.astro";
+import OffresCard from "../components/OffresCard.astro";
+import { getOffres } from "../backend.mjs";
+import Header from "../components/Header.astro";
+
+// Récupère 3 dernières offres
+const dernieresOffres = await getOffres();
 ---
 
 <Layout title="Accueil">
-    <h1>Accueil</h1>
+  
+  
+  <div class="max-w-6xl mx-auto px-4 py-16">
+    <!-- Bouton principal -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-800 mb-4">
+        🏠 Nos offres immobilières
+      </h1>
+      <a 
+        href="/offres" 
+        class="inline-block bg-orange-500 text-white px-8 py-3 rounded-lg font-medium hover:bg-orange-600"
+      >
+        Voir toutes les offres →
+      </a>
+    </div>
+
+    <!-- 3 dernières offres -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {dernieresOffres.slice(0, 3).map((offre) => (
+        <OffresCard offre={offre} />
+      ))}
+    </div>
+
+    <!-- Lien vers toutes les offres -->
+    <div class="text-center mt-12">
+      <a 
+        href="/offres" 
+        class="text-orange-500 hover:underline font-medium text-lg"
+      >
+        Toutes les offres →
+      </a>
+    </div>
+  </div>
 </Layout>

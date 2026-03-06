@@ -8,14 +8,17 @@ const offre = await getOffre(id);
 ---
 
 <Base titre={offre.nom_maison}>
-    <h2>{offre.nom_maison}</offre>
-    <ul>
-        <li>{offre.adresse}</li>
-        <li>{offre.prix} €</li>
-        <li>{offre.surface} m²</li>
-        <li>{offre.nombre_chambre} pièces</li>
-        <li>{offre.nombre_salle_de_bain}</li>
-        <li>{offre.adresse_complete}</li>
+  <div class="p-4 space-y-2">
+    <h2 class="font-bold">🏠 {offre.nom_maison}</h2>
+    
+    <ul class="text-sm space-y-1">
+      <li>📍 {offre.adresse}</li>
+      <li>💰 {offre.prix} €</li>
+      <li>📐 {offre.surface} m²</li>
+      <li>🛏️ {offre.nombre_chambre} pièces</li>
+      <li>🚿 {offre.nombre_salle_de_bain}</li>
+      <li class="text-xs text-gray-500">{offre.adresse_complete}</li>
     </ul>
+  </div>
 </Base>
 
