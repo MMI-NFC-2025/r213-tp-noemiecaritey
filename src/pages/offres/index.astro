@@ -11,6 +11,7 @@ const prix = await getOffresinfprix(500000);
 
 const agents = await getAllAgents();
 
+
 let offres;
 let message = '';
 let selectedAgentId = '';
@@ -25,7 +26,7 @@ if (Astro.request.method === "POST") {
     message = "Offres de l'agent sélectionné";
     }
 
-    if (minPrix > 0 && maxPrix > 0 && maxPrix > minPrix) {
+    else if (minPrix > 0 && maxPrix > 0 && maxPrix > minPrix) {
       console.log("ici par prix", minPrix, maxPrix);
       
         offres = await filterByPrix(minPrix, maxPrix);
@@ -39,6 +40,7 @@ if (Astro.request.method === "POST") {
     }
 } else {
     offres = await getOffres();
+    message= '';
 }
 
 
