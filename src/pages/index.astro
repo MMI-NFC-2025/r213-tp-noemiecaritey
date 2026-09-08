@@ -1,70 +1,95 @@
 ---
-import '../styles/global.css'
+import '../styles/global.css';
 import Layout from "../layouts/Layout.astro";
 import OffresCard from "../components/OffresCard.astro";
 import { getOffres } from "../backend.mjs";
 import Header from "../components/Header.astro";
 
-// Récupère les offres
 const dernieresOffres = await getOffres();
 ---
 
 <Layout title="Accueil">
 
-  <div class="max-w-6xl mx-auto px-4 py-16">
+  <Header />
 
-    <!-- Titre et bouton principal -->
-    <div class="text-center mb-12">
+  <main>
 
-      <h1 class="text-4xl font-bold text-primary mb-4">
-        🏠 Nos offres immobilières
-      </h1>
+    <!-- Hero -->
+    <section class="hero min-h-[50vh] bg-base-200">
+      <div class="hero-content text-center px-4">
 
-      <a
-        href="/offres"
-        class="btn btn-primary text-primary-content"
-      >
-        Voir toutes les offres →
-      </a>
+        <div class="max-w-3xl">
 
-    </div>
+          <div class="badge badge-primary mb-4">
+            Agence immobilière
+          </div>
 
-    <!-- Message d'information -->
-    <div class="alert alert-info text-info-content mb-6">
-      Découvrez nos dernières offres immobilières.
-    </div>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-primary">
+            Trouvez votre prochaine maison 🏠
+          </h1>
 
-    <!-- Message de succès : exercice DaisyUI -->
-    <div class="alert alert-success text-success-content mb-6">
-      Opération réussie !
-    </div>
+          <p class="py-6 text-base md:text-lg text-base-content">
+            Découvrez nos meilleures offres immobilières
+            et trouvez le logement qui vous correspond.
+          </p>
 
-    <!-- Message d'erreur : exercice DaisyUI -->
-    <div class="alert alert-error text-error-content mb-8">
-      Une erreur est survenue.
-    </div>
+          <a
+            href="/offres"
+            class="btn btn-primary text-primary-content"
+          >
+            Voir toutes les offres
+          </a>
 
-    <!-- 3 dernières offres -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        </div>
 
-      {dernieresOffres.slice(0, 3).map((offre) => (
-        <OffresCard offre={offre} />
-      ))}
+      </div>
+    </section>
 
-    </div>
 
-    <!-- Lien vers toutes les offres -->
-    <div class="text-center mt-12">
+    <!-- Contenu -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-      <a
-        href="/offres"
-        class="text-secondary hover:underline font-medium text-lg"
-      >
-        Toutes les offres →
-      </a>
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
 
-    </div>
+        <div>
+          <h2 class="text-3xl font-bold text-base-content">
+            Nos dernières offres
+          </h2>
 
-  </div>
+          <p class="text-base-content/70 mt-2">
+            Les biens récemment ajoutés à notre catalogue.
+          </p>
+        </div>
+
+        <a
+          href="/offres"
+          class="btn btn-outline btn-primary"
+        >
+          Toutes les offres →
+        </a>
+
+      </div>
+
+
+      <!-- Alert DaisyUI -->
+      <div class="alert alert-info text-info-content mb-8">
+        <span>
+          Découvrez nos dernières opportunités immobilières.
+        </span>
+      </div>
+
+
+      <!-- Cards responsive -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        {dernieresOffres.slice(0, 3).map((offre) => (
+          <OffresCard offre={offre} />
+        ))}
+
+      </div>
+
+    </section>
+
+  </main>
 
 </Layout>

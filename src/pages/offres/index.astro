@@ -1,48 +1,63 @@
 ---
-import "../../styles/global.css";
-import OffreCard from "../../components/OffresCard.astro";
-import { getOffres, getOffresSupSurface, getOffresinfprix, getAgentById, getOffresByAgent, getAllAgents } from "../../backend.mjs";
+import '../styles/global.css';
 import Layout from "../../layouts/Layout.astro";
-import { filterByPrix } from "../../backend.mjs";
+import OffresCard from "../../components/OffresCard.astro";
+import Header from "../../components/Header.astro";
+import { getOffres } from "../../backend.mjs";
 
-//const offres = await getOffres();
-const surfaces = await getOffresSupSurface(80);
-const prix = await getOffresinfprix(500000);
+const offres = await getOffres();
+---
 
-const agents = await getAllAgents();
+<Layout title="Nos offres">
+
+  <Header />
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
+
+      <div>
+        <div class="badge badge-primary mb-3">
+          Immobilier
+        </div>
+
+        <h1 class="text-4xl font-bold text-primary">
+          Toutes nos offres
+        </h1>
+
+        <p class="text-base-content/70 mt-2">
+          Retrouvez l'ensemble de nos biens disponibles.
+        </p>
+      </div>
+
+      <a
+        href="/add"
+        class="btn btn-primary text-primary-content"
+      >
+        + Ajouter une offre
+      </a>
+
+    </div>
 
 
-let offres;
-let message = '';
-let selectedAgentId = '';
-if (Astro.request.method === "POST") {
-    const data = await Astro.request.formData();
-    const minPrix = parseInt(data.get("minPrix") as string);
-    const maxPrix = parseInt(data.get("maxPrix") as string);
-    selectedAgentId = (data.get("agentId") as string) || '';
+    <div class="alert alert-success text-success-content mb-8">
+      <span>
+        {offres.length} offre(s) disponible(s)
+      </span>
+    </div>
 
-    if (selectedAgentId) {
-    offres = await getOffresByAgent(selectedAgentId);
-    message = "Offres de l'agent sélectionné";
-    }
 
-    else if (minPrix > 0 && maxPrix > 0 && maxPrix > minPrix) {
-      console.log("ici par prix", minPrix, maxPrix);
-      
-        offres = await filterByPrix(minPrix, maxPrix);
-        if (offres.length === 0) {
-            message = `Pas d'offres entre ${minPrix}€ et ${maxPrix}€`;
-        } else {
-            message = `Liste des offres entre ${minPrix}€ et ${maxPrix}€`;
-        }
-    } else {
-        message = "Veuillez entrer des valeurs valides pour le prix.";
-    }
-} else {
-    offres = await getOffres();
-    message= '';
-}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 
+      {offres.map((offre) => (
+        <OffresCard offre={offre} />
+      ))}
+
+    </div>
+
+  </main>
+
+</Layout>
 
 ---
 

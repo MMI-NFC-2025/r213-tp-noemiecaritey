@@ -1,1 +1,99 @@
 @import "tailwindcss";
+
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "agence";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: oklch(98% 0.01 70);
+  --color-base-200: oklch(95% 0.02 70);
+  --color-base-300: oklch(90% 0.03 70);
+  --color-base-content: oklch(25% 0.02 40);
+
+  --color-primary: oklch(70% 0.18 50);
+  --color-primary-content: oklch(98% 0.01 70);
+
+  --color-secondary: oklch(55% 0.12 35);
+  --color-secondary-content: oklch(98% 0.01 70);
+
+  --color-accent: oklch(75% 0.15 80);
+  --color-accent-content: oklch(25% 0.02 40);
+
+  --color-neutral: oklch(30% 0.02 40);
+  --color-neutral-content: oklch(98% 0.01 70);
+
+  --color-info: oklch(70% 0.12 230);
+  --color-info-content: oklch(98% 0.01 70);
+
+  --color-success: oklch(65% 0.15 145);
+  --color-success-content: oklch(98% 0.01 70);
+
+  --color-warning: oklch(80% 0.16 85);
+  --color-warning-content: oklch(25% 0.02 40);
+
+  --color-error: oklch(65% 0.18 25);
+  --color-error-content: oklch(98% 0.01 70);
+
+  --radius-selector: 0.75rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  --border: 1px;
+
+  --depth: 1;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "agence-dark";
+  default: false;
+  prefersdark: false;
+  color-scheme: dark;
+
+  --color-base-100: oklch(22% 0.02 40);
+  --color-base-200: oklch(18% 0.02 40);
+  --color-base-300: oklch(28% 0.03 40);
+  --color-base-content: oklch(95% 0.01 70);
+
+  --color-primary: oklch(72% 0.18 50);
+  --color-primary-content: oklch(20% 0.02 40);
+
+  --color-secondary: oklch(65% 0.12 35);
+  --color-secondary-content: oklch(98% 0.01 70);
+
+  --color-accent: oklch(78% 0.15 80);
+  --color-accent-content: oklch(20% 0.02 40);
+
+  --color-neutral: oklch(75% 0.02 40);
+  --color-neutral-content: oklch(20% 0.02 40);
+
+  --color-info: oklch(72% 0.12 230);
+  --color-info-content: oklch(20% 0.02 40);
+
+  --color-success: oklch(68% 0.15 145);
+  --color-success-content: oklch(20% 0.02 40);
+
+  --color-warning: oklch(82% 0.16 85);
+  --color-warning-content: oklch(20% 0.02 40);
+
+  --color-error: oklch(68% 0.18 25);
+  --color-error-content: oklch(98% 0.01 70);
+
+  --radius-selector: 0.75rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  --border: 1px;
+
+  --depth: 1;
+  --noise: 0;
+}

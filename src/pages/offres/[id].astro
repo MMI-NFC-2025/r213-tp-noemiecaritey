@@ -1,24 +1,180 @@
 ---
-import { getOffre } from '../../backend.mjs';
-import Base  from '../../layouts/Layout.astro';
+import '../../styles/global.css';
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import PbImage from "../../components/pbImage.astro";
+import pb from "../../utils/pb";
+import { Collections, type MaisonRecord } from "../../utils/pocketbase-types";
 
 const { id } = Astro.params;
-const offre = await getOffre(id);
 
+if (!id) {
+  throw new Error("Identifiant de maison manquant");
+}
+
+const maison = await pb
+  .collection(Collections.Maison)
+  .getOne<MaisonRecord>(id);
 ---
 
-<Base titre={offre.nom_maison}>
-  <div class="p-4 space-y-2">
-    <h2 class="font-bold">🏠 {offre.nom_maison}</h2>
-    
-    <ul class="text-sm space-y-1">
-      <li>📍 {offre.adresse}</li>
-      <li>💰 {offre.prix} €</li>
-      <li>📐 {offre.surface} m²</li>
-      <li>🛏️ {offre.nombre_chambre} pièces</li>
-      <li>🚿 {offre.nombre_salle_de_bain}</li>
-      <li class="text-xs text-gray-500">{offre.adresse_complete}</li>
-    </ul>
-  </div>
-</Base>
+<Layout title={maison.nom_maison}>
 
+  <Header />
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+    <!-- Retour -->
+    <a
+      href="/offres"
+      class="btn btn-ghost mb-6"
+    >
+      ← Retour aux offres
+    </a>
+
+
+    <div class="card lg:card-side bg-base-100 shadow-xl border border-base-300 overflow-hidden">
+
+      <!-- Image -->
+      <figure class="lg:w-1/2">
+
+        {maison.image && (
+          <PbImage
+            record={maison}
+            recordImage={maison.image[0]}
+            width={1000}
+            height={700}
+            class="w-full h-full min-h-80 lg:min-h-full object-cover"
+          />
+        )}
+
+      </figure>
+
+
+      <!-- Informations -->
+      <div class="card-body lg:w-1/2">
+
+        <div class="badge badge-primary w-fit">
+          Offre immobilière
+        </div>
+
+
+        <h1 class="card-title text-3xl md:text-4xl text-primary">
+          {maison.nom_maison}
+        </h1>
+
+
+        <p class="text-base-content/70 text-lg">
+          📍 {maison.adresse_complete}
+        </p>
+
+
+        <div class="divider"></div>
+
+
+        <!-- Prix -->
+        <div>
+
+          <p class="text-sm text-base-content/60">
+            Prix
+          </p>
+
+          <p class="text-3xl font-bold text-success">
+            {maison.prix} €
+          </p>
+
+        </div>
+
+
+        <!-- Caractéristiques -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+
+          <div class="stat bg-base-200 rounded-box p-4">
+
+            <div class="stat-title">
+              Surface
+            </div>
+
+            <div class="stat-value text-primary text-2xl">
+              {maison.surface}
+            </div>
+
+            <div class="stat-desc">
+              m²
+            </div>
+
+          </div>
+
+
+          <div class="stat bg-base-200 rounded-box p-4">
+
+            <div class="stat-title">
+              Chambres
+            </div>
+
+            <div class="stat-value text-secondary text-2xl">
+              {maison.nombre_chambre}
+            </div>
+
+          </div>
+
+
+          <div class="stat bg-base-200 rounded-box p-4">
+
+            <div class="stat-title">
+              Salles de bain
+            </div>
+
+            <div class="stat-value text-accent text-2xl">
+              {maison.nombre_salle_de_bain}
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="divider"></div>
+
+
+        <!-- Favori -->
+        {maison.favori ? (
+
+          <div class="alert alert-error text-error-content">
+            ❤️ Cette maison est dans vos favoris.
+          </div>
+
+        ) : (
+
+          <div class="alert alert-info text-info-content">
+            Cette maison n'est pas encore dans vos favoris.
+          </div>
+
+        )}
+
+
+        <!-- Actions -->
+        <div class="card-actions justify-end mt-4">
+
+          <a
+            href="/offres"
+            class="btn btn-outline"
+          >
+            Retour
+          </a>
+
+          <a
+            href="/favoris"
+            class="btn btn-primary text-primary-content"
+          >
+            ❤️ Voir mes favoris
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</Layout>

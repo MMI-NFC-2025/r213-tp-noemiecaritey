@@ -1,18 +1,140 @@
-<nav class="bg-white shadow-lg border-b border-gray-200 px-6 py-4">
-  <div class="max-w-7xl mx-auto flex justify-between items-center">
-    <div class="flex space-x-8">
-      <a 
-        href="/" 
-        class="text-xl font-bold text-gray-900 hover:text-orange-600 transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-blue-50"
+<header class="sticky top-0 z-50">
+  <div class="navbar bg-base-100 shadow-md px-4 md:px-8">
+
+    <!-- Logo -->
+    <div class="flex-1">
+      <a
+        href="/"
+        class="btn btn-ghost text-xl md:text-2xl text-primary"
       >
-        Accueil
-      </a>
-      <a 
-        href="/offres" 
-        class="text-xl font-semibold text-gray-700 hover:text-orange-600 transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-blue-50"
-      >
-        Offres
+        🏠 Mon Agence
       </a>
     </div>
+
+    <!-- Navigation desktop -->
+    <div class="hidden md:flex flex-none">
+      <ul class="menu menu-horizontal px-1 gap-2">
+
+        <li>
+          <a href="/" class="text-base-content">
+            Accueil
+          </a>
+        </li>
+
+        <li>
+          <a href="/offres" class="text-base-content">
+            Nos offres
+          </a>
+        </li>
+
+        <li>
+          <a href="/favoris" class="text-base-content">
+            ❤️ Favoris
+          </a>
+        </li>
+
+        <li>
+          <a href="/add" class="btn btn-primary text-primary-content">
+            + Ajouter
+          </a>
+        </li>
+
+      </ul>
+    </div>
+
+    <!-- Menu mobile -->
+    <div class="dropdown dropdown-end md:hidden">
+
+      <button
+        tabindex="0"
+        class="btn btn-ghost btn-circle"
+        aria-label="Ouvrir le menu"
+      >
+        ☰
+      </button>
+
+      <ul
+        tabindex="0"
+        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow-xl"
+      >
+        <li>
+          <a href="/">Accueil</a>
+        </li>
+
+        <li>
+          <a href="/offres">Nos offres</a>
+        </li>
+
+        <li>
+          <a href="/favoris">❤️ Favoris</a>
+        </li>
+
+        <li>
+          <a href="/add">+ Ajouter une offre</a>
+        </li>
+      </ul>
+
+    </div>
+
+    <!-- Changement de thème -->
+    <div class="ml-2">
+
+      <label class="swap swap-rotate">
+
+        <input
+          id="theme-controller"
+          type="checkbox"
+          value="agence-dark"
+        />
+
+        <!-- Soleil -->
+        <span class="swap-off text-xl">
+          ☀️
+        </span>
+
+        <!-- Lune -->
+        <span class="swap-on text-xl">
+          🌙
+        </span>
+
+      </label>
+
+    </div>
+
   </div>
-</nav>
+</header>
+
+<script>
+  const themeController = document.querySelector(
+    "#theme-controller"
+  ) as HTMLInputElement | null;
+
+  if (themeController) {
+
+    const savedTheme =
+      localStorage.getItem("theme") || "agence";
+
+    document.documentElement.setAttribute(
+      "data-theme",
+      savedTheme
+    );
+
+    themeController.checked =
+      savedTheme === "agence-dark";
+
+    themeController.addEventListener("change", () => {
+
+      const theme = themeController.checked
+        ? "agence-dark"
+        : "agence";
+
+      document.documentElement.setAttribute(
+        "data-theme",
+        theme
+      );
+
+      localStorage.setItem("theme", theme);
+
+    });
+  }
+</script>
